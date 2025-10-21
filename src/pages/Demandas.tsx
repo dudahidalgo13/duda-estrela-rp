@@ -59,11 +59,15 @@ const Demandas = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      console.log("Demanda enviada:", data);
-      
-      // Aqui você integraria com o backend/CMS
-      // Por enquanto, simulamos o envio
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Salvar demanda no localStorage
+      const demandas = JSON.parse(localStorage.getItem('demandas') || '[]');
+      const novaDemanda = {
+        ...data,
+        id: Date.now().toString(),
+        data: new Date().toISOString(),
+      };
+      demandas.push(novaDemanda);
+      localStorage.setItem('demandas', JSON.stringify(demandas));
       
       toast.success("Demanda enviada com sucesso!", {
         description: "Entraremos em contato em breve.",
